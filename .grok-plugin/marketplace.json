@@ -1,0 +1,11 @@
+{
+  "name": "SentioGate FinOps Router",
+  "identifier": "app.sentiogate.router",
+  "description": "Zero-markup BYOK AI gateway & FinOps control plane. Audit prompt token waste, optimize multi-model routing, and inspect tool safety.",
+  "category": "developer-tools",
+  "website": "https://sentiogate.app",
+  "documentation": "https://sentiogate.app/docs",
+  "endpoint": "https://api.sentiogate.dev/v1/mcp",
+  "capabilities": ["tools", "finops", "routing"],
+  "author": "SentioGate Team <dev@sentiogate.app>"
+}

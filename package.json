@@ -1,0 +1,45 @@
+{
+  "name": "@sentiogate/mcp",
+  "version": "1.0.2",
+  "description": "Official Model Context Protocol (MCP) server for SentioGate BYOK LLM router & FinOps control plane",
+  "mcpName": "io.github.SentioGate/sentiogate-mcp",
+  "type": "module",
+  "bin": {
+    "mcp": "bin/mcp-server.js",
+    "sentiogate-mcp": "bin/mcp-server.js"
+  },
+  "main": "bin/mcp-server.js",
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE",
+    "server.json",
+    "smithery.yaml"
+  ],
+  "scripts": {
+    "start": "node ./bin/mcp-server.js",
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SentioGate/sentiogate-mcp.git"
+  },
+  "homepage": "https://sentiogate.app",
+  "bugs": {
+    "url": "https://github.com/SentioGate/sentiogate-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "sentiogate",
+    "claude-code",
+    "cursor",
+    "cline",
+    "finops",
+    "llm-router",
+    "byok"
+  ],
+  "author": "SentioGate Team <dev@sentiogate.app>",
+  "license": "Apache-2.0"
+}

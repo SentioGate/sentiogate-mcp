@@ -1,0 +1,16 @@
+{
+  "name": "sentiogate-marketplace",
+  "owner": {
+    "name": "SentioGate",
+    "url": "https://sentiogate.app"
+  },
+  "plugins": [
+    {
+      "name": "sentiogate",
+      "source": "./",
+      "description": "Zero-markup BYOK AI Router, FinOps Waste Auditor, and Tool Safety Guard MCP server.",
+      "version": "1.0.0",
+      "category": "developer-tools"
+    }
+  ]
+}

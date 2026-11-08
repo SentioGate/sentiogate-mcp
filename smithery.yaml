@@ -1,0 +1,14 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      sentiogateApiKey:
+        type: string
+        description: "Optional SentioGate Gateway API Key (sg_live_...) to view personal vault limits and audit against your configured BYOK keys"
+  commandFunction:
+    - npx
+    - -y
+    - "@sentiogate/mcp"
+  environmentVariables:
+    SENTIOGATE_API_KEY: config.sentiogateApiKey

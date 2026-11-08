@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "sentiogate": {
+      "type": "http",
+      "url": "https://api.sentiogate.dev/v1/mcp"
+    }
+  }
+}

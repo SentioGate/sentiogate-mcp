@@ -1,0 +1,30 @@
+{
+  "name": "sentiogate",
+  "version": "1.0.0",
+  "description": "Zero-markup BYOK AI Router, FinOps Waste Auditor, and Tool Safety Guard MCP server for Claude Code and Claude Desktop.",
+  "author": {
+    "name": "SentioGate",
+    "url": "https://sentiogate.app"
+  },
+  "homepage": "https://sentiogate.app/docs",
+  "repository": "https://github.com/SentioGate/sentiogate-mcp",
+  "license": "Apache-2.0",
+  "keywords": [
+    "mcp",
+    "finops",
+    "llm-router",
+    "cost-optimization",
+    "byok",
+    "prompt-caching",
+    "tool-safety"
+  ],
+  "mcpServers": {
+    "sentiogate": {
+      "type": "http",
+      "url": "https://api.sentiogate.dev/v1/mcp"
+    }
+  },
+  "skills": [
+    "./skills/sentiogate-finops"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.SentioGate/sentiogate-mcp",
+  "title": "SentioGate FinOps & LLM Router",
+  "description": "BYOK AI router & FinOps control plane: audit token waste, check tool safety, and rank models.",
+  "websiteUrl": "https://sentiogate.app",
+  "repository": {
+    "url": "https://github.com/SentioGate/sentiogate-mcp",
+    "source": "github"
+  },
+  "version": "1.0.2",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.sentiogate.dev/v1/mcp"
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@sentiogate/mcp",
+      "version": "1.0.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "SENTIOGATE_API_KEY",
+          "description": "Optional SentioGate Gateway API Key (sg_live_...) for BYOK Vault and FinOps ledger access",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

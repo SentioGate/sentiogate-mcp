@@ -1,0 +1,21 @@
+{
+  "name": "sentiogate",
+  "version": "1.0.0",
+  "description": "Zero-markup BYOK AI Router, FinOps Waste Auditor, and Tool Safety Guard MCP server.",
+  "author": {
+    "name": "SentioGate",
+    "url": "https://sentiogate.app"
+  },
+  "homepage": "https://sentiogate.app",
+  "repository": "https://github.com/SentioGate/sentiogate-mcp",
+  "license": "Apache-2.0",
+  "mcpServers": {
+    "sentiogate": {
+      "type": "http",
+      "url": "https://api.sentiogate.dev/v1/mcp"
+    }
+  },
+  "skills": [
+    "./skills/sentiogate-finops"
+  ]
+}
