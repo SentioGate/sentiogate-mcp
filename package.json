@@ -1,6 +1,6 @@
 {
   "name": "@sentiogate/mcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Official Model Context Protocol (MCP) server for SentioGate BYOK LLM router & FinOps control plane",
   "mcpName": "io.github.SentioGate/sentiogate-mcp",
   "type": "module",

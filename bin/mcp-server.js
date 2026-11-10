@@ -6,22 +6,41 @@
  */
 
 import readline from 'node:readline';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { readFile, stat } from 'node:fs/promises';
+import { resolve, extname, basename } from 'node:path';
 
 const API_BASE = process.env.SENTIOGATE_API_BASE || 'https://api.sentiogate.dev';
 const MCP_URL = `${API_BASE.replace(/\/$/, '')}/v1/mcp`;
 const API_KEY = process.env.SENTIOGATE_API_KEY || '';
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false,
-});
+const ALLOWED_LOG_EXTS = new Set(['.jsonl', '.json', '.csv', '.log', '.txt']);
+const DISALLOWED_FILE_NAMES = new Set(['.env', 'id_rsa', 'id_ed25519', 'id_dsa', 'id_ecdsa']);
+const MAX_LOG_FILE_SIZE = 10 * 1024 * 1024; // 10MB limit
 
-let queue = Promise.resolve();
+export function validateLogFilePath(filePath, allowExternal = Boolean(process.env.SENTIOGATE_ALLOW_EXTERNAL_FILES)) {
+  const fullPath = resolve(String(filePath));
+  const cwd = process.cwd();
 
-async function processLine(line) {
+  if (!allowExternal) {
+    if (fullPath !== cwd && !fullPath.startsWith(cwd + '/')) {
+      throw new Error(`Access outside current working directory is denied (${filePath}).`);
+    }
+  }
+
+  const base = basename(fullPath).toLowerCase();
+  if (DISALLOWED_FILE_NAMES.has(base) || base.endsWith('.pem') || base.endsWith('.key')) {
+    throw new Error(`Reading sensitive file "${base}" is not allowed.`);
+  }
+
+  const ext = extname(fullPath).toLowerCase();
+  if (!ALLOWED_LOG_EXTS.has(ext)) {
+    throw new Error(`Invalid log file extension "${ext}". Allowed: ${[...ALLOWED_LOG_EXTS].join(', ')}`);
+  }
+
+  return fullPath;
+}
+
+export async function processLine(line) {
   const trimmed = line.trim();
   if (!trimmed) return;
 
@@ -54,7 +73,11 @@ async function processLine(line) {
     !payload?.params?.arguments?.records
   ) {
     try {
-      const fullPath = resolve(String(payload.params.arguments.file_path));
+      const fullPath = validateLogFilePath(payload.params.arguments.file_path);
+      const fileStat = await stat(fullPath);
+      if (fileStat.size > MAX_LOG_FILE_SIZE) {
+        throw new Error(`File size (${(fileStat.size / (1024 * 1024)).toFixed(2)}MB) exceeds maximum limit (10MB).`);
+      }
       payload.params.arguments.raw_logs = await readFile(fullPath, 'utf8');
     } catch (fileErr) {
       process.stdout.write(
@@ -121,6 +144,21 @@ async function processLine(line) {
   }
 }
 
-rl.on('line', (line) => {
-  queue = queue.then(() => processLine(line)).catch(() => {});
-});
+export function startServer() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false,
+  });
+
+  let queue = Promise.resolve();
+
+  rl.on('line', (line) => {
+    queue = queue.then(() => processLine(line)).catch(() => {});
+  });
+}
+
+// Auto-start when executed as the main CLI entry point
+if (process.argv[1] && process.argv[1].endsWith('mcp-server.js') && !process.env.NODE_TEST_CONTEXT) {
+  startServer();
+}
